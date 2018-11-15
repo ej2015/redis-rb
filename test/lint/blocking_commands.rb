@@ -67,6 +67,12 @@ module Lint
       end
     end
 
+    def test_blpop_timeout_with_active_support_duration
+      mock do |r|
+        assert_equal ["{zap}foo", "60"], r.blpop("{zap}foo", 1.minute)
+      end
+    end
+
     def test_blpop_with_old_prototype
       assert_equal ["{zap}foo", "s1"], r.blpop("{zap}foo", 0)
       assert_equal ["{zap}foo", "s2"], r.blpop("{zap}foo", 0)

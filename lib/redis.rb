@@ -1,5 +1,6 @@
 require "monitor"
 require_relative "redis/errors"
+require "active_support/time"
 
 class Redis
 
@@ -1160,6 +1161,8 @@ class Redis
     when Integer
       # Issue deprecation notice in obnoxious mode...
       options[:timeout] = args.pop
+    when ActiveSupport::Duration
+      options[:timeout] = args.pop.to_int
     end
 
     if args.size > 1
